@@ -1,5 +1,3 @@
-// /edit
-
 import type { NextPage } from 'next'
 import List from '../components/List/List'
 import Movie from '../model/Movie'

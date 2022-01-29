@@ -5,6 +5,7 @@ import { Fragment } from 'react'
 import { Movies } from '../index'
 import Form from '../../components/Form/Form'
 import Movie from '../../model/Movie'
+import Head from 'next/head'
 
 const AddPage: NextPage = () => {
   const handleMovieAdd = (movie: Movie) => {
@@ -13,6 +14,9 @@ const AddPage: NextPage = () => {
 
   return (
     <Fragment>
+      <Head>
+        <title>Add a Movie</title>
+      </Head>
       <Form onMovieAdd={handleMovieAdd} />
     </Fragment>
   )
