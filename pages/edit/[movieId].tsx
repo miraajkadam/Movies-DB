@@ -1,11 +1,14 @@
 import axios from 'axios'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import Form from '../../components/Form/Form'
 import Movie from '../../model/Movie'
 
 const EditMoviePage = () => {
   const [movieToEdit, setMovieToEdit] = useState<Movie | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const router = useRouter()
 
   useEffect(() => {
@@ -17,23 +20,49 @@ const EditMoviePage = () => {
   const fetchMovieToEdit = async () => {
     const { movieId } = router.query
 
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}/${movieId}`)
-    const { data } = response
+    setIsLoading(true)
 
-    setMovieToEdit(data)
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}/${movieId}`)
+      const { data } = response
+
+      setMovieToEdit(data)
+    } catch (err: any) {
+      console.error(`Error in fetching the editable movie. ${err && err}`)
+    }
+
+    setIsLoading(false)
   }
 
   const handleEditableMovieSubmit = async (movie: Movie) => {
+    setIsLoading(true)
+
     try {
-      await axios.patch(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}/${movie.id}`, movie).then(() => {
-        router.push('/')
-      })
+      await axios
+        .patch(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}/${movie.id}`, movie)
+        .then(() => {
+          router.push('/')
+        })
     } catch (err: any) {
       console.error(`Error in updating movie. ${err.message && err.message}`)
     }
+
+    setIsLoading(false)
   }
 
-  return <Form editableData={movieToEdit} onFormSubmit={handleEditableMovieSubmit} />
+  return (
+    <Fragment>
+      <Head>
+        <title>{movieToEdit ? `Edit movie ${movieToEdit.name}` : 'Edit movie'}</title>
+      </Head>
+
+      <Form
+        editableData={movieToEdit}
+        onFormSubmit={handleEditableMovieSubmit}
+        isLoading={isLoading}
+      />
+    </Fragment>
+  )
 }
 
 export default EditMoviePage
