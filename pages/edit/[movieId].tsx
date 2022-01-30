@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
@@ -26,7 +27,10 @@ const EditMoviePage = () => {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}/${movieId}`)
       const { data } = response
 
-      setMovieToEdit(data)
+      const date = new Date(data.date)
+      const formattedDate = moment(date).format('YYYY-MM-DD')
+
+      setMovieToEdit({ ...data, date: formattedDate })
     } catch (err: any) {
       console.error(`Error in fetching the editable movie. ${err && err}`)
     }

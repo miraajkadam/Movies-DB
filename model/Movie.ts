@@ -8,7 +8,7 @@ export default class Movie {
   constructor(name: string, rating: number, date: string, plot: string, id?: number) {
     this.name = name
     this.rating = rating
-    this.date = date
+    this.date = new Date(date).toDateString()
     this.plot = plot
     this.id = id && id
   }

@@ -7,16 +7,20 @@ const Navigation = () => {
       <Flex mb={2} justify='flex-end'>
         <Box mr={4}>
           <NextLink href='/' passHref>
-            <Heading as='h3' size='lg'>
-              <Link>All Movies</Link>
-            </Heading>
+            <Link>
+              <Heading as='h3' size='lg'>
+                All Movies
+              </Heading>
+            </Link>
           </NextLink>
         </Box>
         <Box mr={6}>
           <NextLink href='/add' passHref>
-            <Heading as='h3' size='lg'>
-              <Link>Add a movie</Link>
-            </Heading>
+            <Link>
+              <Heading as='h3' size='lg'>
+                Add a movie
+              </Heading>
+            </Link>
           </NextLink>
         </Box>
       </Flex>
