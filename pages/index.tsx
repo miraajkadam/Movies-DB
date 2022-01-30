@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import List from '../components/List/List'
-import Movie from '../model/Movie'
+import Movie from '../models/Movie'
 
 const HomePage: NextPage = () => {
   const [movies, setMovies] = useState<Movie[]>([])

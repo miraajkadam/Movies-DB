@@ -19,7 +19,7 @@ import {
   Textarea,
 } from '@chakra-ui/react'
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
-import Movie from '../../model/Movie'
+import Movie from '../../models/Movie'
 
 interface Props {
   onFormSubmit: (movie: Movie) => void

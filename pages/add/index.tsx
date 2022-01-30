@@ -6,7 +6,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
 import Form from '../../components/Form/Form'
-import Movie from '../../model/Movie'
+import Movie from '../../models/Movie'
 
 const AddPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)

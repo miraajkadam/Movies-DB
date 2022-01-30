@@ -1,5 +1,5 @@
 import { FC, Fragment } from 'react'
-import Movie from '../../model/Movie'
+import Movie from '../../models/Movie'
 
 interface Props {
   movies: Movie[]
