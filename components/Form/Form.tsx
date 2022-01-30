@@ -1,8 +1,9 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 import Movie from '../../model/Movie'
 
 interface Props {
-  onMovieAdd: (movie: Movie) => void
+  onFormSubmit: (movie: Movie) => void
+  editableData?: Movie | null
 }
 
 const Form: FC<Props> = props => {
@@ -13,13 +14,24 @@ const Form: FC<Props> = props => {
     plot: '',
   })
 
+  const { editableData } = props
+  useEffect(() => {
+    if (editableData) setMovie(editableData)
+  }, [editableData])
+
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     try {
-      const newMovie = new Movie(movie.name, +movie.rating, movie.date, movie.plot)
+      let movieAfterSubmit: Movie
 
-      props.onMovieAdd(newMovie)
+      if (props.editableData) {
+        movieAfterSubmit = new Movie(movie.name, +movie.rating, movie.date, movie.plot, movie.id)
+      } else {
+        movieAfterSubmit = new Movie(movie.name, +movie.rating, movie.date, movie.plot)
+      }
+
+      props.onFormSubmit(movieAfterSubmit)
     } catch (err: any) {
       let error = `Error in creating the movie ${err.message && err.message}`
       console.error(error)
@@ -51,7 +63,7 @@ const Form: FC<Props> = props => {
       <label htmlFor='plot'>Plot: </label>
       <textarea onChange={handleInputChange} value={movie.plot} name='plot' />
       <br />
-      <input type='submit' />
+      <input type='submit' value={props.editableData ? 'Update' : 'Add'} />
     </form>
   )
 }

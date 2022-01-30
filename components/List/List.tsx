@@ -3,6 +3,8 @@ import Movie from '../../model/Movie'
 
 interface Props {
   movies: Movie[]
+  onMovieEdit: (id: number) => void
+  onMovieDelete: (id: number) => void
 }
 
 const List: FC<Props> = props => {
@@ -14,6 +16,8 @@ const List: FC<Props> = props => {
           <li>{movie.rating}</li>
           <li>{movie.date}</li>
           <li>{movie.plot}</li>
+          <button onClick={() => props.onMovieEdit(movie.id!)}>Edit</button>
+          <button onClick={() => props.onMovieDelete(movie.id!)}>Delete</button>
         </Fragment>
       ))}
     </ul>
