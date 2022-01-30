@@ -1,3 +1,4 @@
+import { Spinner } from '@chakra-ui/react'
 import axios from 'axios'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -7,6 +8,7 @@ import Movie from '../model/Movie'
 
 const HomePage: NextPage = () => {
   const [movies, setMovies] = useState<Movie[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const router = useRouter()
 
@@ -15,12 +17,14 @@ const HomePage: NextPage = () => {
   }, [])
 
   const fetchMovies = async () => {
+    setIsLoading(true)
     try {
       const { data } = await axios.get(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}`)
       setMovies(data)
     } catch (err: any) {
       console.error(`Error in fetching the movies. ${err.message && err.message}`)
     }
+    setIsLoading(false)
   }
 
   const handleMovieEdit = (id: number) => {
@@ -37,7 +41,11 @@ const HomePage: NextPage = () => {
     }
   }
 
-  return <List movies={movies} onMovieEdit={handleMovieEdit} onMovieDelete={handleMovieDelete} />
+  return isLoading ? (
+    <Spinner />
+  ) : (
+    <List movies={movies} onMovieEdit={handleMovieEdit} onMovieDelete={handleMovieDelete} />
+  )
 }
 
 export default HomePage
