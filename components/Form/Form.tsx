@@ -118,7 +118,9 @@ const Form: FC<Props> = props => {
                 <SliderTrack>
                   <SliderFilledTrack />
                 </SliderTrack>
-                <SliderThumb fontSize='sm' boxSize='32px' children={movie.rating?.toString()} />
+                <SliderThumb fontSize='sm' boxSize='32px'>
+                  {movie.rating?.toString()}
+                </SliderThumb>
               </Slider>
             </Flex>
 
