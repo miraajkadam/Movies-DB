@@ -42,7 +42,7 @@ const HomePage: NextPage = () => {
   }
 
   return isLoading ? (
-    <Spinner />
+    <Spinner ml='10%' mt="10%" size='xl' />
   ) : (
     <List movies={movies} onMovieEdit={handleMovieEdit} onMovieDelete={handleMovieDelete} />
   )

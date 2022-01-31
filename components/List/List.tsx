@@ -1,5 +1,7 @@
-import { FC, Fragment } from 'react'
+import { SimpleGrid } from '@chakra-ui/react'
+import { FC } from 'react'
 import Movie from '../../models/Movie'
+import Card from './Card'
 
 interface Props {
   movies: Movie[]
@@ -7,21 +9,25 @@ interface Props {
   onMovieDelete: (id: number) => void
 }
 
-const List: FC<Props> = props => {
-  return (
-    <ul>
-      {props.movies.map((movie: Movie, index: number) => (
-        <Fragment key={index}>
-          <h2>{movie.name}</h2>
-          <li>{movie.rating}</li>
-          <li>{movie.date}</li>
-          <li>{movie.plot}</li>
-          <button onClick={() => props.onMovieEdit(movie.id!)}>Edit</button>
-          <button onClick={() => props.onMovieDelete(movie.id!)}>Delete</button>
-        </Fragment>
-      ))}
-    </ul>
-  )
-}
+const List: FC<Props> = props => (
+  <SimpleGrid spacing={10} columns={[2, 2, 3, 3, 4]} pl={10} pr={10} mb={10}>
+    {props.movies.map((movie: Movie, index: number) => (
+      <Card
+        key={index}
+        id={movie.id!}
+        name={movie.name}
+        rating={movie.rating}
+        plot={movie.plot}
+        date={movie.date}
+        onMovieEdit={() => {
+          props.onMovieEdit(movie.id!)
+        }}
+        onMovieDelete={() => {
+          props.onMovieDelete(movie.id!)
+        }}
+      />
+    ))}
+  </SimpleGrid>
+)
 
 export default List

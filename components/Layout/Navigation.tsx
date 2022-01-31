@@ -3,7 +3,7 @@ import NextLink from 'next/link'
 
 const Navigation = () => {
   return (
-    <Box mb={5}>
+    <Box pt={2} mb={5}>
       <Flex mb={2} justify='flex-end'>
         <Box mr={4}>
           <NextLink href='/' passHref>
