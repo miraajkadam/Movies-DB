@@ -19,13 +19,13 @@ import { FC, Fragment } from 'react'
 
 interface Props {
   key: number
-  id: number
+  id: string
   name: string
   rating: number | string
   date: string
   plot: string
-  onMovieEdit: (id: number) => void
-  onMovieDelete: (id: number) => void
+  onMovieEdit: (id: string) => void
+  onMovieDelete: (id: string) => void
 }
 
 const Card: FC<Props> = props => {

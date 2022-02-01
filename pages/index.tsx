@@ -19,21 +19,28 @@ const HomePage: NextPage = () => {
   const fetchMovies = async () => {
     setIsLoading(true)
     try {
-      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}`)
-      setMovies(data)
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}`)
+      const data: { value: Movie } = response.data
+
+      let fetchedMovies: Movie[] = []
+      for (let [key, value] of Object.entries(data)) {
+        fetchedMovies.push({ ...value, id: key })
+      }
+
+      setMovies(fetchedMovies)
     } catch (err: any) {
       console.error(`Error in fetching the movies. ${err.message && err.message}`)
     }
     setIsLoading(false)
   }
 
-  const handleMovieEdit = (id: number) => {
+  const handleMovieEdit = (id: string) => {
     router.push(`/edit/${id}`)
   }
 
-  const handleMovieDelete = async (id: number) => {
+  const handleMovieDelete = async (id: string) => {
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}/${id}`).then(() => {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE}/delete/${id}`).then(() => {
         fetchMovies()
       })
     } catch (err: any) {
@@ -42,7 +49,7 @@ const HomePage: NextPage = () => {
   }
 
   return isLoading ? (
-    <Spinner ml='10%' mt="10%" size='xl' />
+    <Spinner ml='10%' mt='10%' size='xl' />
   ) : (
     <List movies={movies} onMovieEdit={handleMovieEdit} onMovieDelete={handleMovieDelete} />
   )

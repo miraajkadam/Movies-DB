@@ -1,0 +1,23 @@
+// /api/movies/delete/[movieId]
+
+import axios from 'axios'
+import { NextApiRequest, NextApiResponse } from 'next'
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { method } = req
+
+  switch (method) {
+    case 'DELETE': {
+      const { movieId } = req.query
+      await axios.delete(`${process.env.NEXT_PUBLIC_FIREBASE_URL}/moviesDB/${movieId}.json`)
+
+      res.status(200).json({ message: 'Movie deleted', id: movieId })
+      break
+    }
+    default: {
+      console.error('Not a supported route')
+    }
+  }
+}
+
+export default handler

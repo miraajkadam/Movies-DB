@@ -5,8 +5,8 @@ import Card from './Card'
 
 interface Props {
   movies: Movie[]
-  onMovieEdit: (id: number) => void
-  onMovieDelete: (id: number) => void
+  onMovieEdit: (id: string) => void
+  onMovieDelete: (id: string) => void
 }
 
 const List: FC<Props> = props => (

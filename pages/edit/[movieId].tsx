@@ -24,13 +24,13 @@ const EditMoviePage = () => {
     setIsLoading(true)
 
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}/${movieId}`)
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE}/get/${movieId}`)
       const { data } = response
 
       const date = new Date(data.date)
       const formattedDate = moment(date).format('YYYY-MM-DD')
 
-      setMovieToEdit({ ...data, date: formattedDate })
+      setMovieToEdit({ ...data, date: formattedDate, id: movieId })
     } catch (err: any) {
       console.error(`Error in fetching the editable movie. ${err && err}`)
     }
@@ -42,11 +42,9 @@ const EditMoviePage = () => {
     setIsLoading(true)
 
     try {
-      await axios
-        .patch(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}/${movie.id}`, movie)
-        .then(() => {
-          router.push('/')
-        })
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE}/edit/${movie.id}`, movie).then(() => {
+        router.push('/')
+      })
     } catch (err: any) {
       console.error(`Error in updating movie. ${err.message && err.message}`)
     }

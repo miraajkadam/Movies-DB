@@ -17,9 +17,8 @@ const AddPage: NextPage = () => {
     setIsLoading(true)
 
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_JSON_SERVER_URL}`, movie).then(() => {
-        router.push('/')
-      })
+      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE}/add`, movie)
+      router.push('/')
     } catch (err: any) {
       console.error(`Error in posting movie to database. ${err.message && err.message}`)
     }
@@ -36,10 +35,5 @@ const AddPage: NextPage = () => {
     </Fragment>
   )
 }
-
-// export async function getStaticProps() {
-//   console.log(process.env.NEXT_PUBLIC_FIREBASE_URL) // ...
-//   return { props: {} }
-// }
 
 export default AddPage
