@@ -16,7 +16,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         res.status(201).json({ id: response.data.name })
       } catch (err: any) {
-        console.error(`Error occurred while posting the data to firebase, ${err.message}`)
+        console.error(`Error occurred while posting the movie to the database, ${err.message}`)
+        res.status(500).json({ message: 'Error in posting the movie to database' })
       }
 
       break

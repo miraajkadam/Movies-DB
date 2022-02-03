@@ -8,10 +8,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   switch (method) {
     case 'DELETE': {
-      const { movieId } = req.query
-      await axios.delete(`${process.env.NEXT_PUBLIC_FIREBASE_URL}/moviesDB/${movieId}.json`)
+      try {
+        const { movieId } = req.query
+        await axios.delete(`${process.env.NEXT_PUBLIC_FIREBASE_URL}/moviesDB/${movieId}.json`)
 
-      res.status(200).json({ message: 'Movie deleted', id: movieId })
+        res.status(200).json({ message: 'Movie deleted', id: movieId })
+      } catch (err: any) {
+        console.error(
+          `Error occurred while deleting movie from the database, ${err.message && err.message}`
+        )
+      }
       break
     }
     default: {

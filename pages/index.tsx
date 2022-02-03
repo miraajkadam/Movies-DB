@@ -16,6 +16,9 @@ const HomePage: NextPage = () => {
     fetchMovies()
   }, [])
 
+  /**
+   * Request server for latest movies, updates movies state after request
+   */
   const fetchMovies = async () => {
     setIsLoading(true)
     try {
@@ -34,11 +37,19 @@ const HomePage: NextPage = () => {
     setIsLoading(false)
   }
 
+  /**
+   * Requests the server to edit a movie
+   * @param {string} id - The id of the movie
+   */
   const handleMovieEdit = (id: string) => {
     router.push(`/edit/${id}`)
   }
 
-  const handleMovieDelete = async (id: string) => {
+  /**
+   * Requests the server to delete a movie
+   * @param {string} id - The id of the movie
+   */
+  const handleMovieDelete = async (id: string): Promise<any> => {
     try {
       await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE}/delete/${id}`).then(() => {
         fetchMovies()
