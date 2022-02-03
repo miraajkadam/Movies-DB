@@ -1,7 +1,3 @@
-// import Movie from './model/Movie'
-
-// interface MovieType extends Movie {
-//   id: number
-// }
-
-// export { MovieType as Movie }
+export interface MovieError extends Error {
+  isError: boolean
+}

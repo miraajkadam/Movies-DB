@@ -3,12 +3,15 @@ import moment from 'moment'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
+import { MovieError } from '../..'
 import Form from '../../components/Form/Form'
+import Alert from '../../components/Layout/Alert'
 import Movie from '../../models/Movie'
 
 const EditMoviePage = () => {
   const [movieToEdit, setMovieToEdit] = useState<Movie | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [error, setError] = useState<MovieError>({ isError: false, name: '', message: '' })
 
   const router = useRouter()
 
@@ -33,6 +36,11 @@ const EditMoviePage = () => {
       setMovieToEdit({ ...data, date: formattedDate, id: movieId })
     } catch (err: any) {
       console.error(`Error in fetching the editable movie. ${err && err}`)
+      setError({
+        isError: true,
+        name: 'Error in fetching the editable movie',
+        message: err.message,
+      })
     }
 
     setIsLoading(false)
@@ -57,7 +65,15 @@ const EditMoviePage = () => {
       <Head>
         <title>{movieToEdit ? `Edit movie ${movieToEdit.name}` : 'Edit movie'}</title>
       </Head>
-
+      {error.isError && (
+        <Alert
+          title={error.name}
+          description={error.message}
+          onCloseClick={() => {
+            setError({ isError: false, name: '', message: '' })
+          }}
+        />
+      )}
       <Form
         editableData={movieToEdit}
         onFormSubmit={handleEditableMovieSubmit}
