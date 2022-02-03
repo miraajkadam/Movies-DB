@@ -1,34 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[![Next CI](https://github.com/miraajkadam/Movies-DB/actions/workflows/Next-CI.yml/badge.svg)](https://github.com/miraajkadam/Movies-DB/actions/workflows/Next-CI.yml)
+# Movies-DB
+Mock movie database with add/update/delete/read (CRUD) functionality.
+
+## Built With
+* [Next.js](https://nextjs.org/)
+* [Chakra-UI](https://chakra-ui.com/)
+* [Firebase](https://firebase.google.com/) for online Database
+* [JSON Server](https://github.com/typicode/json-server) for local DB
+* Written in [Typescript](https://www.typescriptlang.org/)
 
 ## Getting Started
-
-First, run the development server:
-
+* **Step 1:** Clone this repository.
+* **Step 2:** Change your directory to the clone.
 ```bash
-npm run dev
-# or
-yarn dev
+cd <folder_name>
 ```
+* **Step 3:** Install all dependencies
+```bash
+yarn
+```
+* **Step 4:** Setup Firebase with your credentials and add it to the environment variables.
+```bash
+touch .env.local
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+echo NEXT_PUBLIC_FIREBASE_URL=[your-firebase-endpoint] >> .env.local
+echo NEXT_PUBLIC_API_BASE=/api/movies >> .env.local
+```
+* **Step 5:** Run the dev server locally.
+```bash
+yarn dev 
+```
+## Available Scripts
+In the project directory, you can run:
+##### `yarn dev`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+##### `yarn run build`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Builds and optimizes the application for production usage.\
+It correctly bundles React with Next in production mode and optimizes the build for the best performance.
 
-## Learn More
+##### `yarn start`
 
-To learn more about Next.js, take a look at the following resources:
+Runs the app in  Next.js production server.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+##### `yarn run lint`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Sets up Next.js' built-in ESLint configuration
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+Distributed under the GPL-2.0 License. See `LICENSE.txt` for more information
