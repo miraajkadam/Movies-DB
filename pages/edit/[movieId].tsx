@@ -3,10 +3,10 @@ import moment from 'moment'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
-import { MovieError } from '../..'
 import Form from '../../components/Form/Form'
 import Alert from '../../components/Layout/Alert'
 import Movie from '../../models/Movie'
+import MovieError from '../../models/MovieError'
 
 const EditMoviePage = () => {
   const [movieToEdit, setMovieToEdit] = useState<Movie | null>(null)

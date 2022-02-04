@@ -5,10 +5,10 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
-import { MovieError } from '../..'
 import Form from '../../components/Form/Form'
 import Alert from '../../components/Layout/Alert'
 import Movie from '../../models/Movie'
+import MovieError from '../../models/MovieError'
 
 const AddPage: NextPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
