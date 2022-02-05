@@ -15,6 +15,7 @@ import {
   Text,
   useDisclosure
 } from '@chakra-ui/react'
+import Head from 'next/head'
 import { FC, Fragment } from 'react'
 
 interface Props {
@@ -33,6 +34,11 @@ const Card: FC<Props> = props => {
 
   return (
     <Fragment>
+      {isOpen && (
+        <Head>
+          <title>{props.name}</title>
+        </Head>
+      )}
       <Flex direction='column' align='flex-end' border='1px' borderRadius='lg' p={5}>
         <Box align='right'>
           <Heading mb={3} as='h1' size='xl'>
