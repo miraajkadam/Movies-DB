@@ -1,16 +1,15 @@
 import axios, { AxiosResponse } from 'axios'
 import { useState } from 'react'
 import { RequestConfig } from '..'
-import Movie from '../models/Movie'
 import useError from './use-error'
 
 const useRequest = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { setMovieError: setError } = useError()
+  const { error, setMovieError: setError } = useError()
 
   const sendRequest = async (
     config: RequestConfig,
-    callback?: (response: AxiosResponse<{ firebaseKey: { movie: Movie } }, RequestConfig>) => void
+    callback?: (response: AxiosResponse<any, RequestConfig>) => void
   ) => {
     setIsLoading(true)
 
@@ -21,7 +20,7 @@ const useRequest = () => {
         data: config.body && config.body,
       })
 
-      if (callback) callback(response.data)
+      if (callback) callback(response)
     } catch (err: any) {
       console.error(config.error)
 
@@ -35,7 +34,7 @@ const useRequest = () => {
     setIsLoading(false)
   }
 
-  return { isLoading, sendRequest }
+  return { isLoading, sendRequest, error, setError }
 }
 
 export default useRequest
