@@ -41,14 +41,17 @@ const EditMoviePage = () => {
   }
 
   const handleEditableMovieSubmit = async (movie: Movie) => {
-    await sendRequest({
-      url: `${process.env.NEXT_PUBLIC_API_BASE}/edit/${movie.id}`,
-      method: 'PATCH',
-      body: movie,
-      error: 'Failed to patch the movie to the server',
-    }).then(() => {
-      router.push('/')
-    })
+    await sendRequest(
+      {
+        url: `${process.env.NEXT_PUBLIC_API_BASE}/edit/${movie.id}`,
+        method: 'PATCH',
+        body: movie,
+        error: 'Failed to patch the movie to the server',
+      },
+      response => {
+        if (response && response.status === 200) router.push('/')
+      }
+    )
   }
 
   return (

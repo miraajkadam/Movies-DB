@@ -15,14 +15,17 @@ const AddPage: NextPage = () => {
   const { isLoading, sendRequest: PostMovieToServer, error, setError } = useRequest()
 
   const handleMovieAdd = async (movie: Movie) => {
-    await PostMovieToServer({
-      url: `${process.env.NEXT_PUBLIC_API_BASE}/add`,
-      method: 'POST',
-      body: movie,
-      error: 'Failed to post the movie to the server',
-    }).then(() => {
-      router.push('/')
-    })
+    await PostMovieToServer(
+      {
+        url: `${process.env.NEXT_PUBLIC_API_BASE}/add`,
+        method: 'POST',
+        body: movie,
+        error: 'Failed to post the movie to the server',
+      },
+      response => {
+        if (response && response.status === 201) router.push('/')
+      }
+    )
   }
 
   return (
