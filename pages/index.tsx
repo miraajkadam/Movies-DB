@@ -1,38 +1,29 @@
 import { Spinner } from '@chakra-ui/react'
-import { AxiosResponse } from 'axios'
+import axios from 'axios'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect, useState } from 'react'
-import { RequestConfig, ResponseType } from '..'
 import Alert from '../components/Layout/Alert'
 import List from '../components/List/List'
 import useRequest from '../hooks/use-request'
 import Movie from '../models/Movie'
+import Helper from '../utils/Helper'
 
-const HomePage: NextPage = () => {
-  const [movies, setMovies] = useState<Movie[]>([])
+interface Props {
+  movies: Movie[]
+}
+
+const HomePage: NextPage<Props> = props => {
+  const [movies, setMovies] = useState<Movie[]>(props.movies)
   const router = useRouter()
 
   const { isLoading, sendRequest, error, setError } = useRequest()
 
   useEffect(() => {
-    fetchMovies()
-  }, [])
-
-  /**
-   * Transforms response from server into array and sets it into state
-   * @param {AxiosResponse<any, RequestConfig>} response: response from the server
-   */
-  const transformMoviesForState = (response: AxiosResponse<any, RequestConfig>) => {
-    const data: ResponseType = response.data
-
-    let fetchedMovies: Movie[] = []
-    for (let [key, value] of Object.entries(data)) {
-      fetchedMovies.push({ ...value, id: key })
+    if (!props.movies || props.movies.length === 0) {
+      setError({ isError: true, name: 'No movies in the database', message: '' })
     }
-
-    setMovies(fetchedMovies)
-  }
+  }, [])
 
   /**
    * Request server for latest movies, updates movies state after request
@@ -43,7 +34,12 @@ const HomePage: NextPage = () => {
         url: `${process.env.NEXT_PUBLIC_API_BASE}`,
         error: 'Error in fetching movies from the server',
       },
-      transformMoviesForState
+      response => {
+        const helper = new Helper()
+
+        let movies = helper.transformMoviesIntoArray(response)
+        setMovies(movies)
+      }
     )
   }
 
@@ -88,3 +84,19 @@ const HomePage: NextPage = () => {
 }
 
 export default HomePage
+
+export async function getServerSideProps() {
+  let movies: Movie[] = []
+
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_FIREBASE_URL}/moviesDB.json`)
+    const helper = new Helper()
+    movies = helper.transformMoviesIntoArray(response)
+  } catch (err: any) {
+    console.error(`Error in fetching movie from the database: ${err.message && err.message}`)
+  }
+
+  return {
+    props: { movies },
+  }
+}
